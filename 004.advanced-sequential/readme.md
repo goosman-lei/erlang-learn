@@ -4,14 +4,12 @@ BIF是erlang的组成部分, 是erlang虚拟机中实现的, 不过在erlang的�
 
 所有的BIF都包含在erlang模块中. [http://www.erlang.org/doc/man/erlang.html](BIF文档)
 
-# 二进制数据
+# 比特语法
 
 ```erl
 <<5, 10, 20>>.
 <<"Hello">>.
 ```
-
-# 比特语法
 
 比特语法, 是一种模式匹配语法, 主要用于对二进制数据中的比特进行封包和解包.
 
@@ -24,13 +22,10 @@ Ei = Value |
      Value:Size/TypeSpecifierList
 
 TypeSpecifierList = [End] [ "-" Sign ] [ "-" Type ] [ "-" Unit ]
-End = big | little | native
-Sign = signed | unsigned
-Type = integer | float | binary
-Unit = 1 | 2 | ... | 255
-
-% TypeSpecifierList 用来指定使用的字节序
-
+End = big | little | native % 字节序[大小端]
+Sign = signed | unsigned % 符号位
+Type = integer | float | binary % 类型. binary默认Unit为8, 其他默认Unit为1
+Unit = 1 | 2 | ... | 255 % 占用空间为Size * Unit
 ```
 
 # erlang小问题集锦
