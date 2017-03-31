@@ -1,0 +1,14 @@
+#!/bin/bash
+__DIR__=$( cd $( dirname ${BASH_SOURCE[0]} ) && pwd )
+__ROOT__=$__DIR__
+__LIB_DIR__=$__ROOT__/lib
+__SRC_DIR__=$__ROOT__/src
+
+[ -d $__LIB_DIR__ ] || mkdir -p $__LIB_DIR__
+
+cd $__ROOT__ \
+    && erlc -o $__LIB_DIR__ $__SRC_DIR__/misc.erl \
+    && erlc -o $__LIB_DIR__ $__SRC_DIR__/mpeg.erl \
+    && erlc -o $__LIB_DIR__ $__SRC_DIR__/pcap.erl \
+    && erlc -o $__LIB_DIR__ $__SRC_DIR__/utils.erl \
+    && escript $__SRC_DIR__/main.erl
