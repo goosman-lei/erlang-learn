@@ -11,4 +11,5 @@ cd $__ROOT__ \
     && erlc -o $__LIB_DIR__ $__SRC_DIR__/mpeg.erl \
     && erlc -o $__LIB_DIR__ $__SRC_DIR__/pcap.erl \
     && erlc -o $__LIB_DIR__ $__SRC_DIR__/utils.erl \
+    && erlc -o $__LIB_DIR__ $__SRC_DIR__/extract.erl \
     && escript $__SRC_DIR__/main.erl

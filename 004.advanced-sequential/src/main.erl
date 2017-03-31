@@ -10,6 +10,7 @@ main(_) ->
 	demo_ColorBegin(95), io:format("~p:\n", [demo_MysqlTcpdumpUnpack]), demo_ColorEndBegin(34), demo_MysqlTcpdumpUnpack(),
 
 	demo_ColorBegin(95), io:format("~p:\n", [demo_Apply]), demo_ColorEndBegin(34), demo_Apply(),
+	demo_ColorBegin(95), io:format("~p:\n", [demo_ExtractAttr]), demo_ColorEndBegin(34), demo_ExtractAttr(),
 
 	demo_ColorEnd().
 
@@ -74,6 +75,12 @@ demo_MysqlTcpdumpUnpack() ->
 
 demo_Apply() ->
     apply(io, format, ["Hello World From apply call", []]),
+
+    io:format("~n").
+
+demo_ExtractAttr() ->
+    io:format("extract:attribute(\"lib/pcap.beam\", [author]): ~p~n", [extract:attribute("lib/pcap.beam", author)]),
+    io:format("extract:attribute(\"lib/pcap.beam\", [purpose]): ~p~n", [extract:attribute("lib/pcap.beam", purpose)]),
 
     io:format("~n").
 
