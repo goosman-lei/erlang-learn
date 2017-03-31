@@ -227,3 +227,156 @@ double(L) -> lists:map(fun x1:square/1, L).
 
 -endif.
 ```
+
+## 模式中使用匹配操作符
+
+```erl
+% 模式匹配到的元祖, 可以赋值给临时变量
+
+func([{tag, A, B}|T]) ->
+    ...,
+    f(..., {tag, A, B}, ...),
+    ...
+    .
+
+func([{tag, A, B} = Z|T]) ->
+    ...,
+    f(..., Z, ...),
+    ...
+    .
+
+% 模式匹配到的元祖内部, 仍然可以嵌套的赋值
+
+func([{tag, {one, A}, B}|T]) ->
+    ...,
+    f(..., {tag, A, B}, ...),
+    ...
+    .
+
+func([{tag, {one, A} = Z1, B} = Z2|T]) ->
+    ...,
+    f(..., Z1, ...),
+    f(..., Z2, ...),
+    ...
+    .
+```
+
+## 数值类型
+
+### 整型
+
+```erl
+% 整型数值的3种表示语法
+
+% 1) 传统语法
+A = 12.
+B = 12375.
+C = -23427.
+
+% 2) K进制表示法
+
+A = 2#001000010.
+B = 16#AB0137F.
+
+% 3) $语法: 语法$C表示ASCII字符C的整数值
+
+A = $a % A = 97
+A = $1 % A = 49
+```
+
+### 浮点型
+
+```erl
+% 浮点型表示法
+
+Floag := [Sign] Integer "." Decimal [Exponent]
+
+Sign := "+" | "-"
+Integer := [0-9]+
+Decimal := [0-9]+
+Exponent := ("E" | "e") [Sign] Integer
+```
+
+## 操作符优先级
+
+|操作符|结合律|
+|:||
+|#||
+|(unary)+, (unary)-, bnot, not||
+|/, *, div, rem, band, and|左结合|
+|+, -, bor, bxor, bsl, bsr, or, xor|左结合|
+|++, --|右结合|
+|==, /=, =<, <, >=, >, =:=, =/=||
+|andalso||
+|orelse||
+
+## 进程字典
+
+```erl
+% 向进程字典增加数据
+
+@spec put(Key, Value) -> OldValue.
+
+% 获取进程字典中的数据
+
+@spec get(Key) -> Value.
+
+% 获取整个进程字典中所有数据
+
+@spec get() -> [{Key, Value}].
+
+% 获取进程字典中的所有值为Value的Key
+
+@spec get_keys(Value) -> [Key].
+
+% 删除进程字典中指定Key的数据
+
+@spec erase(Key) -> Value.
+
+% 清空进程字典
+
+@spec erase() -> [{Key, Value}].
+```
+
+## 引用
+
+引用是全局唯一的erlang值.
+
+使用BIF erlang:make_ref()创建引用.
+
+## 短路布尔表达式
+
+```erl
+Expr1 orelse Expr2
+
+Expr1 andalso Expr2
+```
+
+## 比较表达式
+
+```erl
+X > Y       % 大于
+X < Y       % 小于
+X =< Y      % 小于等于
+X >= Y      % 大于等于
+X == Y      % 等于(0.0 == 0)
+X /= Y      % 不等于
+X =:= Y     % 全等于(全等意味着有相同的值, 不存在引用问题)
+X =/= Y     % 不全等于(0.0 =/= 0)
+
+% 模式匹配中, 对类型不同的不会予以通过
+
+fun(12) -> 1.
+
+% 使用下面代码调用则不会通过
+
+fun(12.0).
+
+% erlang中类型的大小顺序
+
+number < atom < reference < fun < port < pid < tuple < list < binary
+```
+
+## 下划线变量
+
+主要用途: 命名一个不准备使用的变量(抑制编译器警告), 但同时提供更高的可读性.
