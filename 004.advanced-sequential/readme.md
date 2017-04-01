@@ -55,6 +55,10 @@ Unit = 1 | 2 | ... | 255 % 占用空间为Size * Unit
 
 -compile(Options).
 
+% 把模块中的每个函数都导出
+
+-compile(export_all).
+
 % vsn用来指定模块的版本.
 % Version值可以是任何形式的文字项
 
