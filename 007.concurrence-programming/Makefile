@@ -68,7 +68,7 @@ exercise_1.beam:
 exercise_2.beam:
 	@echo ================================== Demo 9: exercise_2 =====================================
 	${CC} ${SRC_DIR}/exercise_2.erl
-	${ERL} -s exercise_2 start
+	${ERL} -s exercise_2 start 6 5
 	@echo
 
 # 路径准备及清理
