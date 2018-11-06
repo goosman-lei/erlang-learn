@@ -1,0 +1,1 @@
+-record(customer, {name = "<anonymous>", address, phone}).
